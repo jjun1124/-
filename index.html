@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hacking Sim</title>
+  <style>
+    body { background: black; color: #0f0; font-family: monospace; }
+    #console { white-space: pre; }
+  </style>
+</head>
+<body>
+<pre id="console"></pre>
+<script>
+const consoleEl = document.getElementById('console');
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function printSlow(text, delay=10) {
+  for(let ch of text) {
+    consoleEl.textContent += ch;
+    await sleep(delay);
+  }
+  consoleEl.textContent += "\n";
+}
+
+async function randomGreenLines(lines=50, length=100) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for(let i=0; i<lines; i++) {
+    let line = "";
+    for(let j=0; j<length; j++) {
+      line += chars[Math.floor(Math.random()*chars.length)];
+    }
+    consoleEl.textContent += line + "\n";
+    await sleep(5);
+  }
+}
+
+async function hackingSim() {
+  await printSlow("Booting encrypted network drivers...");
+  await printSlow("Opening secure corporate tunnel...");
+  await printSlow("Handshake failed. Restarting quantum session...");
+  await printSlow("Querying admin access token...");
+  await printSlow("Token rejected. Initiating Password Mining Array...");
+  await randomGreenLines();
+  await printSlow("Decrypting fragmented hash blocks...");
+  
+  for(let i=1;i<=100;i++){
+    let bar = "#".repeat(Math.floor(i/2));
+    let empty = ".".repeat(50 - Math.floor(i/2));
+    consoleEl.textContent += `Cracking admin password: [${bar}${empty}] ${i}%\n`;
+    await sleep(50);
+  }
+
+  await printSlow("Admin password fully extracted.");
+  await printSlow("Injecting root shell payload...");
+  await printSlow("Root Access Obtained. System compromised.");
+}
+
+hackingSim();
+</script>
+</body>
+</html>
+
